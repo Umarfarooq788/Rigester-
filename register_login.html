@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register & Login</title>
+  <style>
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      color: #d60000;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid red;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #d60000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #a30000;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 10px;
+      color: blue;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div id="register-form">
+      <h2>Register</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="tel" id="phone" placeholder="Phone Number" />
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="register()">Register</button>
+      <div class="toggle" onclick="showLogin()">Already have an account? Login</div>
+    </div>
+
+    <div id="login-form" style="display: none;">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <div class="toggle" onclick="showRegister()">Don't have an account? Register</div>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwuFmJ0Q3zaKOsu922oEl4QZox6fE5pLklO9Jw4W_PQ8ELQCy6WGcG6xtRUtj0K0vkK/exec";
+
+    function showLogin() {
+      document.getElementById("register-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+    }
+
+    function showRegister() {
+      document.getElementById("register-form").style.display = "block";
+      document.getElementById("login-form").style.display = "none";
+    }
+
+    function register() {
+      const data = {
+        action: "register",
+        username: document.getElementById("username").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: new URLSearchParams(data),
+      })
+        .then(res => res.text())
+        .then(response => {
+          alert("Registered Successfully!");
+          window.location.href = "https://xmod.top/site/Hack_Apk.html";
+        })
+        .catch(error => {
+          alert("Error registering. Please try again.");
+          console.error(error);
+        });
+    }
+
+    function login() {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      fetch(scriptURL + `?action=login&email=${email}&password=${password}`)
+        .then(res => res.json())
+        .then(response => {
+          if (response.success) {
+            alert("Login Successful!");
+            window.location.href = "https://xmod.top/site/Hack_Apk.html";
+          } else {
+            alert("Login Failed. Check your email or password.");
+          }
+        })
+        .catch(error => {
+          alert("Login error.");
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>
